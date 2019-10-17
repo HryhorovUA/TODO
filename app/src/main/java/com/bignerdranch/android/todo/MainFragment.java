@@ -3,24 +3,24 @@ package com.bignerdranch.android.todo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainFragment extends Fragment {
-    //private RecyclerView mRecyclerView;
     private static String TAG = "MainFragment";
+    private static String EXTRA = "DAY_OF_WEEK";
 
-    Day[] mDays = new Day[7];
+    private RecyclerView mRecyclerView;
+    private FloatingActionButton mFloatingActionButton;
+    private Day[] mDays = new Day[7];
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -29,17 +29,24 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.main_fragment, container, false);
-        RecyclerView mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_days);
-
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_days);
 
         mDays = Day.createWeek();
 
-
         WeekAdapter weekAdapter = new WeekAdapter(mDays);
-
 
         mRecyclerView.setAdapter(weekAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mFloatingActionButton = (FloatingActionButton) v.findViewById(R.id.fab_main);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddingActivity.class);
+                startActivity(intent);
+
+            }
+        });
 
         return v;
     }
@@ -60,7 +67,7 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DetailedDay.class);
+                Intent intent = new Intent(getActivity(), DetailedDayActivity.class);
                 startActivity(intent);
             }
         }

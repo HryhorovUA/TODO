@@ -2,13 +2,14 @@ package com.bignerdranch.android.todo;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class Day {
+public class Day implements Serializable {
     private static String TAG = "Day";
     private String dayOfTheWeek;
     private String dateOfTheWeek;
@@ -88,7 +89,7 @@ public class Day {
                     week[i].setDayOfTheWeek("Saturday");
             }
             numberOfTheDay++;
-            numberOfTheDay%=7;
+            numberOfTheDay %= 7;
 
             calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, i);
