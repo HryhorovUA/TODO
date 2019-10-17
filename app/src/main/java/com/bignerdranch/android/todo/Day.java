@@ -14,7 +14,7 @@ public class Day implements Serializable {
     private static String TAG = "Day";
     private String dayOfTheWeek;
     private String dateOfTheWeek;
-    private List<String> noticeList;
+    private List<SimpleNotice> noticeList;
 
     public String getDateOfTheWeek() {
         return dateOfTheWeek;
