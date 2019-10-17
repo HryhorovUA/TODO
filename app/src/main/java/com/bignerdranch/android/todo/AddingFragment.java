@@ -1,6 +1,7 @@
 package com.bignerdranch.android.todo;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -20,9 +22,13 @@ import java.util.Calendar;
 
 public class AddingFragment extends Fragment {
     private static final String DIALOG_DATE = "DIALOG_DATE";
-    Button mChoiceButton;
-    Calendar mCalendar = Calendar.getInstance();
-    DatePickerDialog mDatePickerDialog;
+    private static final String DIALOG_TIME = "DIALOG_TIME";
+    private Button mChoiceDayButton;
+    private Button mChoiceTimeButton;
+    private Calendar mCalendar = Calendar.getInstance();
+    private DatePickerDialog mDatePickerDialog;
+    private TimePickerDialog mTimePickerDialog;
+    private EditText mEditTextNotice;
 
     public static AddingFragment newInstance() {
         return new AddingFragment();
@@ -32,17 +38,31 @@ public class AddingFragment extends Fragment {
     public View  onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.adding_fragment, container, false);
 
-        mChoiceButton = (Button) v.findViewById(R.id.date_button_choice);
-        mChoiceButton.setOnClickListener(new View.OnClickListener() {
+        mChoiceDayButton = (Button) v.findViewById(R.id.date_button_choice);
+        mChoiceDayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mDatePickerDialog.show();
             }
         });
 
+        mChoiceTimeButton = (Button) v.findViewById(R.id.time_button_choice);
+        mChoiceTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager manager = getFragmentManager();
+                TimePickerFragment dialog = new TimePickerFragment();
+                dialog.show(manager, DIALOG_TIME);
+            }
+        });
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             initDatePicker();
         }
+
+        mEditTextNotice= (EditText) v.findViewById(R.id.edit_notice);
+
+
         return v;
     }
 

@@ -14,7 +14,7 @@ import java.util.Date;
 public class DatePickerFragment extends DialogFragment {
     private static final String ARG_DATE = "date";
 
-    private DatePicker mDatePicker;
+    //private DatePicker mDatePicker;
 
     /*public static DatePickerFragment newInstance(Date date) {
         Bundle args = new Bundle();
