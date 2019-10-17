@@ -8,11 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Day implements Serializable {
     private static String TAG = "Day";
     private String dayOfTheWeek;
     private String dateOfTheWeek;
+    private List<String> noticeList;
 
     public String getDateOfTheWeek() {
         return dateOfTheWeek;

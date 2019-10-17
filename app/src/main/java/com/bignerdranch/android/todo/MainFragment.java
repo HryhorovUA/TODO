@@ -54,6 +54,8 @@ public class MainFragment extends Fragment {
     public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.ViewHolder>  {
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+            private Day mDay;
+
             public TextView nameTextView;
             public TextView dateTextView;
 
@@ -62,13 +64,17 @@ public class MainFragment extends Fragment {
 
                 nameTextView = (TextView) itemView.findViewById(R.id.name_of_day);
                 dateTextView = (TextView) itemView.findViewById(R.id.date_of_day);
-                nameTextView.setOnClickListener((View.OnClickListener) this);
+                itemView.setOnClickListener((View.OnClickListener) this);
             }
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DetailedDayActivity.class);
+                Intent intent = DetailedDayActivity.newIntent(getActivity(), mDay);
                 startActivity(intent);
+            }
+
+            public void bind(Day day) {
+                mDay = day;
             }
         }
 
@@ -96,7 +102,7 @@ public class MainFragment extends Fragment {
         @Override
         public void onBindViewHolder(WeekAdapter.ViewHolder viewHolder, int position) {
             Day day = weekDays[position];
-
+            viewHolder.bind(day);
             TextView textView = viewHolder.nameTextView;
             textView.setText(day.getDayOfTheWeek());
             TextView dateView = viewHolder.dateTextView;
