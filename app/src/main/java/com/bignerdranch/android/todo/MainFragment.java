@@ -21,9 +21,11 @@ public class MainFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;
+    private DaysController mDaysController;
+
     private static  Day[] mDays = new Day[7];
 
-    public static void addNoticeDay(int position, String notice) {
+    public void addNoticeDay(int position, String notice) {
         mDays[position].addNotice(notice);
     }
 
@@ -36,7 +38,8 @@ public class MainFragment extends Fragment {
         View v = inflater.inflate(R.layout.main_fragment, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_days);
 
-        mDays = Day.createWeek();
+        mDaysController = DaysController.getInstance();
+        mDays = mDaysController.getDays();
 
         WeekAdapter weekAdapter = new WeekAdapter(mDays);
 
@@ -75,6 +78,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = DetailedDayActivity.newIntent(getActivity(), mDay);
+                Log.e("MainFragment", mDay.getListNotice().toString());
                 startActivity(intent);
             }
 

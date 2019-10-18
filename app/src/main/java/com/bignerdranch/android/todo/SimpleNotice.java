@@ -1,6 +1,8 @@
 package com.bignerdranch.android.todo;
 
-public class SimpleNotice {
+import java.io.Serializable;
+
+public class SimpleNotice implements Serializable {
     private String notice;
     private String date;
 

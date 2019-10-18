@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,27 +63,32 @@ public class AddingFragment extends Fragment {
 
         mEditTextNotice= (EditText) v.findViewById(R.id.edit_notice);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            initDatePicker();
+        }
+
         mConfirmButton = (Button) v.findViewById(R.id.confirm_button);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getNotice = (String) mEditTextNotice.getText().toString();
-                MainFragment.addNoticeDay(positionOfDay, "Notice: " + getNotice);
+                Log.i(TAG, "Working-0");
+                DaysController daysController = DaysController.getInstance();
+                Log.i(TAG, "Working-010");
+                Day day = daysController.getDay(positionOfDay);
+                Log.i(TAG, "Working-1");
+                day.addNotice("QWERTY");
+                Log.i(TAG, "Working-2");
             }
         });
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            positionOfDay = initDatePicker();
-        }
 
         return v;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    private int initDatePicker() {
+    private void initDatePicker() {
         Calendar calendar = Calendar.getInstance();
         int currentDay = (int) calendar.get(Calendar.DAY_OF_WEEK);
-        AtomicInteger position = new AtomicInteger();
 
         mDatePickerDialog = new DatePickerDialog(getContext());
         mDatePickerDialog.getDatePicker().setMinDate(mCalendar.getTimeInMillis());
@@ -93,21 +99,21 @@ public class AddingFragment extends Fragment {
             mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             int clicked = mCalendar.get(Calendar.DAY_OF_WEEK);
 
+            //Log.i(TAG, Integer.toString(currentDay));
+            int dayPosition;
+
             if (clicked < currentDay) {
-                position.set(7 - (clicked - 1));
+                dayPosition = 7 - currentDay + clicked;
             } else if (clicked > currentDay) {
-                position.set(clicked - currentDay);
+                dayPosition = clicked - currentDay;
             } else {
-                position.set(0);
+                dayPosition = 0;
             }
 
+            positionOfDay = dayPosition;
 
             //MainFragment.addNoticeDay(position, "Notice" + position);
         });
 
-        int finalPos = position.get();
-
-        return finalPos;
     }
-
 }

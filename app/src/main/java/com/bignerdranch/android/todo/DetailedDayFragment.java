@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -59,7 +60,8 @@ public class DetailedDayFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.note_list_recyclerview);
 
-        ArrayList<SimpleNotice> simpleNoticeArrayList = DetailedDayActivity.getDay().getListNotice();
+        ArrayList<SimpleNotice> simpleNoticeArrayList = mDay.getListNotice();
+        Log.i(TAG, mDay.getDayOfTheWeek());
 
         NoticeAdapter noticeAdapter = new NoticeAdapter(simpleNoticeArrayList);
         mRecyclerView.setAdapter(noticeAdapter);
@@ -70,8 +72,7 @@ public class DetailedDayFragment extends Fragment {
 
     public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder> {
 
-
-        public class ViewHolder extends RecyclerView.ViewHolder  {
+        public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
             private SimpleNotice mSimpleNotice;
             public TextView mTextViewOfNotice;
 
@@ -79,10 +80,18 @@ public class DetailedDayFragment extends Fragment {
                 super(itemView);
 
                 mTextViewOfNotice = (TextView) itemView.findViewById(R.id.text_of_notice);
+
+                itemView.setOnLongClickListener(this);
             }
 
             public void bind(SimpleNotice notice) {
                 mSimpleNotice = notice;
+            }
+
+            @Override
+            public boolean onLongClick(View view) {
+                //onclickListener.onItemLongClick(getAdapterPosition(), view);
+                return true;
             }
         }
 
