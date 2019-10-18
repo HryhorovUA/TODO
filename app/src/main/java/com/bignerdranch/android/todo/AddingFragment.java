@@ -60,16 +60,16 @@ public class AddingFragment extends Fragment {
             }
         });
 
+        mEditTextNotice= (EditText) v.findViewById(R.id.edit_notice);
+
         mConfirmButton = (Button) v.findViewById(R.id.confirm_button);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getNotice = (String) mEditTextNotice.getText().toString();
                 MainFragment.addNoticeDay(positionOfDay, "Notice: " + getNotice);
             }
         });
-
-        mEditTextNotice= (EditText) v.findViewById(R.id.edit_notice);
-        getNotice = (String) mEditTextNotice.getText().toString();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             positionOfDay = initDatePicker();
