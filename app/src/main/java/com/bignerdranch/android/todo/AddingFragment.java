@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
@@ -34,6 +36,8 @@ public class AddingFragment extends Fragment {
     private String getNotice;
 
     private int positionOfDay;
+    private int currentHour;
+    private int currentMinute;
 
     public static AddingFragment newInstance() {
         return new AddingFragment();
@@ -55,9 +59,25 @@ public class AddingFragment extends Fragment {
         mChoiceTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager manager = getFragmentManager();
-                TimePickerFragment dialog = new TimePickerFragment();
-                dialog.show(manager, DIALOG_TIME);
+
+//                FragmentManager manager = getFragmentManager();
+//                TimePickerFragment dialog = new TimePickerFragment();
+//                dialog.show(manager, DIALOG_TIME);
+
+                Calendar mCurrentTime = Calendar.getInstance();
+                int hour = mCurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mCurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        currentHour = hourOfDay;
+                        currentMinute = minute;
+                    }
+                }, hour, minute, true);
+
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
             }
         });
 
@@ -66,6 +86,10 @@ public class AddingFragment extends Fragment {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             initDatePicker();
         }
+
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            initTimePicker();
+//        }
 
         mConfirmButton = (Button) v.findViewById(R.id.confirm_button);
         mConfirmButton.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +101,7 @@ public class AddingFragment extends Fragment {
                 Log.i(TAG, "Working-010");
                 Day day = daysController.getDay(positionOfDay);
                 Log.i(TAG, "Working-1");
-                day.addNotice(getNotice);
+                day.addNotice(getNotice, currentHour, currentMinute);
                 Log.i(TAG, "Working-2");
             }
         });
@@ -111,9 +135,24 @@ public class AddingFragment extends Fragment {
             }
 
             positionOfDay = dayPosition;
-
-            //MainFragment.addNoticeDay(position, "Notice" + position);
         });
 
     }
+
+//    @RequiresApi(api = Build.VERSION_CODES.N)
+//    private void initTimePicker() {
+//        Calendar calendar = Calendar.getInstance();
+//        int currentTimeHour = (int) calendar.get(Calendar.HOUR_OF_DAY);
+//        int currentTimeMinute = (int) calendar.get(Calendar.MINUTE);
+//
+//        Log.i(TAG, "!!!!!!!!!!!!!");
+//
+//        mTimePickerDialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+//            @Override
+//            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                Log.i(TAG, "Time = " + Integer.toString(hourOfDay) + ":" + Integer.toString(minute) );
+//            }
+//        }, 0, 0, true);
+//
+//    }
 }

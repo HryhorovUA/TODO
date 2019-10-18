@@ -34,12 +34,10 @@ public class Day implements Serializable {
         Log.i(TAG, Integer.toString(noticeList.size()));
     }
 
-    public void addNotice(String notice) {
-        Log.i(TAG, "HellDay-0");
-        SimpleNotice simpleNotice = new SimpleNotice(notice, "2018-12-12");
-        Log.i(TAG, "HellDay-1");
+    public void addNotice(String notice, int hour, int minutes) {
+        String date = Integer.toString(hour) + ":" + Integer.toString(minutes);
+        SimpleNotice simpleNotice = new SimpleNotice(notice, date);
         noticeList.add(simpleNotice);
-        Log.i(TAG, "HellDay-2");
     }
 
     public ArrayList<SimpleNotice> getListNotice() {

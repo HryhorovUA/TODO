@@ -23,9 +23,9 @@ public class MainFragment extends Fragment {
     private FloatingActionButton mFloatingActionButton;
     private DaysController mDaysController;
 
-    public void addNoticeDay(int position, String notice) {
-        mDaysController.getDay(position).addNotice(notice);
-    }
+//    public void addNoticeDay(int position, String notice) {
+//        mDaysController.getDay(position).addNotice(notice);
+//    }
 
     public static MainFragment newInstance() {
         return new MainFragment();

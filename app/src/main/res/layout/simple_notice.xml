@@ -5,9 +5,13 @@
     android:background="@drawable/custom_boarder2">
 
     <TextView
-        android:id="@+id/text_of_notice"
-        android:layout_height="20dp"
-        android:layout_width="match_parent"/>
+        android:id="@+id/date_of_notice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/text_of_notice"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"/>
 
 </LinearLayout>

@@ -84,11 +84,13 @@ public class DetailedDayFragment extends Fragment {
             private SimpleNotice mSimpleNotice;
 
             public TextView mTextViewOfNotice;
+            public TextView mDateViewOfNotice;
 
             public ViewHolder(View itemView) {
                 super(itemView);
 
                 mTextViewOfNotice = (TextView) itemView.findViewById(R.id.text_of_notice);
+                mDateViewOfNotice = (TextView) itemView.findViewById(R.id.date_of_notice);
 
                 itemView.setOnLongClickListener(this);
             }
@@ -129,8 +131,9 @@ public class DetailedDayFragment extends Fragment {
             SimpleNotice notice = noticeList.get(position);
             viewHolder.bind(notice);
             TextView textView = viewHolder.mTextViewOfNotice;
+            TextView dateView = viewHolder.mDateViewOfNotice;
             textView.setText(notice.getNotice());
-            Log.i(TAG, notice.getNotice());
+            dateView.setText(notice.getDate());
         }
 
         @Override
