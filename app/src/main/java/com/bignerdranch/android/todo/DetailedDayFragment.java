@@ -28,13 +28,15 @@ public class DetailedDayFragment extends Fragment {
     private static final String TAG = "DetailedDayFragment";
     private static final String DAY_EXTRA = "DAY_EXTRA";
 
-    private Day mDay;
+    //private Day mDay;
+    private int dayPosition;
 
     private FloatingActionButton mFloatingActionButton;
     private TextView mTextViewDate;
     private TextView mTextViewDay;
     private ActionBar mActionBar;
     private RecyclerView mRecyclerView;
+    private static DaysController sDaysController = DaysController.getInstance();
 
     public static DetailedDayFragment newInstance() {
         return new DetailedDayFragment();
@@ -42,11 +44,14 @@ public class DetailedDayFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDay = (Day) getActivity()
+        dayPosition = (Integer) getActivity()
                 .getIntent()
                 .getSerializableExtra(DetailedDayActivity.EXTRA_DAY);
 
-        getActivity().setTitle(mDay.getDayOfTheWeek() + "  " + mDay.getDateOfTheWeek());
+        getActivity()
+                .setTitle(sDaysController.getDay(dayPosition).getDayOfTheWeek()
+                + "  "
+                + sDaysController.getDay(dayPosition).getDateOfTheWeek());
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,8 +68,8 @@ public class DetailedDayFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.note_list_recyclerview);
 
-        ArrayList<SimpleNotice> simpleNoticeArrayList = mDay.getListNotice();
-        Log.i(TAG, mDay.getDayOfTheWeek());
+        ArrayList<SimpleNotice> simpleNoticeArrayList = sDaysController.getDay(dayPosition).getListNotice();
+        //Log.i(TAG, mDay.getDayOfTheWeek());
 
         NoticeAdapter noticeAdapter = new NoticeAdapter(simpleNoticeArrayList);
         mRecyclerView.setAdapter(noticeAdapter);
@@ -94,7 +99,7 @@ public class DetailedDayFragment extends Fragment {
 
             @Override
             public boolean onLongClick(View view) {
-                dialogMake(mDay, positionOfDelete);
+                dialogMake(sDaysController.getDay(dayPosition), positionOfDelete);
                 return true;
             }
         }

@@ -10,11 +10,11 @@ import java.util.Date;
 public class DaysController {
     private static final String TAG = "DaysController";
 
-    private static Day[] mDays = createWeek();
+    private Day[] mDays;
     private static DaysController sDaysController;
 
     private DaysController() {
-        createWeek();
+        mDays = createWeek();
     }
 
     public static DaysController getInstance() {
@@ -34,7 +34,7 @@ public class DaysController {
         return mDays;
     }
 
-    public static Day[] createWeek() {
+    private Day[] createWeek() {
         Day[] week = new Day[7];
         int numberOfTheDay = 0;
         Date currentDate = new Date();

@@ -23,10 +23,8 @@ public class MainFragment extends Fragment {
     private FloatingActionButton mFloatingActionButton;
     private DaysController mDaysController;
 
-    private static  Day[] mDays = new Day[7];
-
     public void addNoticeDay(int position, String notice) {
-        mDays[position].addNotice(notice);
+        mDaysController.getDay(position).addNotice(notice);
     }
 
     public static MainFragment newInstance() {
@@ -39,9 +37,8 @@ public class MainFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recycler_view_days);
 
         mDaysController = DaysController.getInstance();
-        mDays = mDaysController.getDays();
 
-        WeekAdapter weekAdapter = new WeekAdapter(mDays);
+        WeekAdapter weekAdapter = new WeekAdapter(mDaysController.getDays());
 
         mRecyclerView.setAdapter(weekAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -59,10 +56,15 @@ public class MainFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((WeekAdapter)mRecyclerView.getAdapter()).updateWeek(mDaysController.getDays());
+    }
+
     public class WeekAdapter extends RecyclerView.Adapter<WeekAdapter.ViewHolder>  {
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-            private Day mDay;
 
             public TextView nameTextView;
             public TextView dateTextView;
@@ -77,24 +79,20 @@ public class MainFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                Intent intent = DetailedDayActivity.newIntent(getActivity(), mDay);
-                Log.e("MainFragment", mDay.getListNotice().toString());
+                Intent intent = DetailedDayActivity.newIntent(getActivity(), getAdapterPosition());
                 startActivity(intent);
-            }
-
-            public void bind(Day day) {
-                mDay = day;
             }
         }
 
-
-
-        private Day[] weekDays = new Day[7];
+        private Day[] weekDays;
 
         public WeekAdapter(Day[] week) {
-            for (int i = 0; i < 7; i++) {
-                weekDays[i] = week[i];
-            }
+            weekDays = week;
+        }
+
+        public void updateWeek(Day[] week) {
+            weekDays = week;
+            notifyDataSetChanged();
         }
 
         @Override
@@ -111,16 +109,19 @@ public class MainFragment extends Fragment {
         @Override
         public void onBindViewHolder(WeekAdapter.ViewHolder viewHolder, int position) {
             Day day = weekDays[position];
-            viewHolder.bind(day);
             TextView textView = viewHolder.nameTextView;
             textView.setText(day.getDayOfTheWeek());
             TextView dateView = viewHolder.dateTextView;
             dateView.setText(day.getDateOfTheWeek());
         }
 
+        public Day getDayByPosition(int position) {
+            return weekDays[position];
+        }
+
         @Override
         public int getItemCount() {
-            return 7;
+            return weekDays.length;
         }
     }
 }

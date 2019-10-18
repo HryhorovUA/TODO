@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment;
 public class DetailedDayActivity extends SingleFragmentActivity {
 
     public static final String EXTRA_DAY = "EXTRA_DAY";
-    private static Day mDay;
+    //private static Day mDay;
 
-    public static Intent newIntent(Context packageContext, Day day) {
+    public static Intent newIntent(Context packageContext, int dayPosition) {
         Intent intent = new Intent(packageContext, DetailedDayActivity.class);
-        intent.putExtra(EXTRA_DAY, day);
-        mDay = day;
+        intent.putExtra(EXTRA_DAY, dayPosition);
+        //mDay = day;
         return intent;
     }
 
@@ -22,7 +22,7 @@ public class DetailedDayActivity extends SingleFragmentActivity {
         return DetailedDayFragment.newInstance();
     }
 
-    public static Day getDay() {
-        return mDay;
-    }
+//    public static Day getDay() {
+//        return mDay;
+//    }
 }
