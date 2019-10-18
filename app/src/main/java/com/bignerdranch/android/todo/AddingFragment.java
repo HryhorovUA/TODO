@@ -99,7 +99,7 @@ public class AddingFragment extends Fragment {
                 DaysController daysController = DaysController.getInstance();
                 Day day = daysController.getDay(positionOfDay);
                 day.addNotice(getNotice, currentHour, currentMinute);
-
+                day.sort();
                 getActivity().onBackPressed();
             }
         });
