@@ -10,7 +10,7 @@ import java.util.Date;
 public class DaysController {
     private static final String TAG = "DaysController";
 
-    private Day[] mDays = createWeek();
+    private static Day[] mDays = createWeek();
     private static DaysController sDaysController;
 
     private DaysController() {

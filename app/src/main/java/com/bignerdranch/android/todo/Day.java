@@ -28,6 +28,12 @@ public class Day implements Serializable {
         this.dayOfTheWeek = dayOfTheWeek;
     }
 
+    public void deleteNotice(int position) {
+        Log.i(TAG, Integer.toString(noticeList.size()));
+        noticeList.remove(position);
+        Log.i(TAG, Integer.toString(noticeList.size()));
+    }
+
     public void addNotice(String notice) {
         Log.i(TAG, "HellDay-0");
         SimpleNotice simpleNotice = new SimpleNotice(notice, "2018-12-12");

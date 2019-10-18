@@ -1,7 +1,10 @@
 package com.bignerdranch.android.todo;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -74,6 +77,7 @@ public class DetailedDayFragment extends Fragment {
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
             private SimpleNotice mSimpleNotice;
+
             public TextView mTextViewOfNotice;
 
             public ViewHolder(View itemView) {
@@ -90,7 +94,7 @@ public class DetailedDayFragment extends Fragment {
 
             @Override
             public boolean onLongClick(View view) {
-                //onclickListener.onItemLongClick(getAdapterPosition(), view);
+                dialogMake(mDay, positionOfDelete);
                 return true;
             }
         }
@@ -112,8 +116,11 @@ public class DetailedDayFragment extends Fragment {
             noticeList = notices;
         }
 
+        private int positionOfDelete;
+
         @Override
         public void onBindViewHolder(NoticeAdapter.ViewHolder viewHolder, int position) {
+            positionOfDelete = position;
             SimpleNotice notice = noticeList.get(position);
             viewHolder.bind(notice);
             TextView textView = viewHolder.mTextViewOfNotice;
@@ -125,5 +132,38 @@ public class DetailedDayFragment extends Fragment {
         public int getItemCount() {
             return noticeList.size();
         }
+
+        public void updateItems(ArrayList<SimpleNotice> notices) {
+            noticeList = notices;
+            notifyDataSetChanged();
+        }
     }
+
+    public void dialogMake(Day day, int position) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Deleting");
+        builder.setMessage("Do you want to delete this item?");
+
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                day.deleteNotice(position);
+                NoticeAdapter adapter = (NoticeAdapter) mRecyclerView.getAdapter();
+                adapter.updateItems(day.getListNotice());
+
+            }
+        });
+
+        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
+    }
+
+
 }

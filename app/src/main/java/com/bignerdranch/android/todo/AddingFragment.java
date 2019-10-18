@@ -77,7 +77,7 @@ public class AddingFragment extends Fragment {
                 Log.i(TAG, "Working-010");
                 Day day = daysController.getDay(positionOfDay);
                 Log.i(TAG, "Working-1");
-                day.addNotice("QWERTY");
+                day.addNotice(getNotice);
                 Log.i(TAG, "Working-2");
             }
         });
