@@ -96,13 +96,11 @@ public class AddingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getNotice = (String) mEditTextNotice.getText().toString();
-                Log.i(TAG, "Working-0");
                 DaysController daysController = DaysController.getInstance();
-                Log.i(TAG, "Working-010");
                 Day day = daysController.getDay(positionOfDay);
-                Log.i(TAG, "Working-1");
                 day.addNotice(getNotice, currentHour, currentMinute);
-                Log.i(TAG, "Working-2");
+
+                getActivity().onBackPressed();
             }
         });
 
