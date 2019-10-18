@@ -3,6 +3,7 @@ package com.bignerdranch.android.todo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,11 @@ public class MainFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;
-    private Day[] mDays = new Day[7];
+    private static  Day[] mDays = new Day[7];
+
+    public static void addNoticeDay(int position, String notice) {
+        mDays[position].addNotice(notice);
+    }
 
     public static MainFragment newInstance() {
         return new MainFragment();

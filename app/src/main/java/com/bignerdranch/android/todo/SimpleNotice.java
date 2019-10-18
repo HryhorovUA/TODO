@@ -4,6 +4,11 @@ public class SimpleNotice {
     private String notice;
     private String date;
 
+    public SimpleNotice(String notice, String date) {
+        this.date = date;
+        this.notice = notice;
+    }
+
     public String getNotice() {
         return notice;
     }

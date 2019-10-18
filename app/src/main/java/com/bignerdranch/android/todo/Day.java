@@ -8,13 +8,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Day implements Serializable {
     private static String TAG = "Day";
     private String dayOfTheWeek;
     private String dateOfTheWeek;
-    private List<SimpleNotice> noticeList;
+    private static ArrayList<SimpleNotice> noticeList = new ArrayList<SimpleNotice>();
 
     public String getDateOfTheWeek() {
         return dateOfTheWeek;
@@ -32,6 +33,15 @@ public class Day implements Serializable {
         this.dayOfTheWeek = dayOfTheWeek;
     }
 
+    public static void addNotice(String notice) {
+        SimpleNotice simpleNotice = new SimpleNotice(notice, "2018-12-12");
+        noticeList.add(simpleNotice);
+    }
+
+    public static ArrayList<SimpleNotice> getListNotice() {
+        return noticeList;
+    }
+
     public static Day[] createWeek() {
         Day[] week = new Day[7];
         int numberOfTheDay = 0;
@@ -39,9 +49,6 @@ public class Day implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd ");
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-
-        String d = Integer.toString(day);
-        Log.i(TAG, d);
 
         switch (day) {
             case Calendar.SUNDAY:
